@@ -22,7 +22,8 @@ public class Cart implements Serializable {
     @Column(name = "cart_id", nullable = false)
     private Integer cartID;
 
-    //git branch tuan1 lan 2
+    //git branch tuan1 lan 4
+
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private User user;
