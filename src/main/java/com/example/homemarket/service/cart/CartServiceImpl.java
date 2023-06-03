@@ -103,7 +103,7 @@ public class CartServiceImpl implements CartService {
     }
     @Override
     @Transactional
-    public BaseResponse placeorder(PlaceOrderRequestDTO orderRequestDTO) {
+    public BaseResponse placeOrder(PlaceOrderRequestDTO orderRequestDTO) {
         try {
             List<Integer> cartItemIds = orderRequestDTO.getCartItemID();
             Integer firstCartItemId = cartItemIds.get(0);

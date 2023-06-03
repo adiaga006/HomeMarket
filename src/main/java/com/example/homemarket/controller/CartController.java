@@ -5,8 +5,7 @@ import com.example.homemarket.dtos.request.PlaceOrderRequestDTO;
 import com.example.homemarket.dtos.request.ItemEditRequestDTO;
 import com.example.homemarket.dtos.request.ItemRequestDTO;
 import com.example.homemarket.dtos.response.BaseResponse;
-import com.example.homemarket.entities.Order;
-import com.example.homemarket.service.cart.CartService;
+import com.example.homemarket.facade.CartFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,72 +16,45 @@ import java.util.List;
 @RequestMapping("/api/cart")
 public class CartController {
 
-    private final CartService cartService;
+    private final CartFacade cartFacade;
 
-    public CartController(CartService cartService) {
-        this.cartService = cartService;
+    public CartController(CartFacade cartFacade) {
+        this.cartFacade = cartFacade;
     }
 
     @CrossOrigin
     @GetMapping("/items")
     public ResponseEntity<CartDTO> getCart(@RequestParam("key") Integer userId){
-        return ResponseEntity.ok(cartService.getCart(userId));
+        return cartFacade.getCart(userId);
     }
-
-
-//   @GetMapping("/{id}")
-//    public ResponseEntity<CheckoutDTO> getCheckout(@PathVariable Integer id){
-//        return ResponseEntity.ok(cartService.getCheckoutInfo(id));
-//    }
 
     @CrossOrigin
     @GetMapping("/checkout")
     public ResponseEntity<BaseResponse> checkout(@RequestParam("key") List<Integer> cartItemId) {
-        BaseResponse response = cartService.checkout(cartItemId);
-        return ResponseEntity.ok(response);
+        return cartFacade.checkout(cartItemId);
     }
+
     @CrossOrigin
     @PostMapping("/add")
     public ResponseEntity<BaseResponse> createItem(@RequestBody ItemRequestDTO itemRequestDTO){
-        try {
-            return ResponseEntity.ok(cartService.createItem(itemRequestDTO));
-        }catch (RuntimeException e){
-            return ResponseEntity.
-                    status(HttpStatus.INTERNAL_SERVER_ERROR).
-                    body(new BaseResponse(false, e.getMessage()));
-        }
+        return cartFacade.createItem(itemRequestDTO);
     }
+
     @CrossOrigin
     @DeleteMapping("/delete")
     public ResponseEntity<BaseResponse> delete(@RequestParam("key") Integer itemId){
-        try{
-            return ResponseEntity.ok(cartService.deleteItem(itemId));
-        }catch (RuntimeException e){
-            return ResponseEntity.
-                    status(HttpStatus.INTERNAL_SERVER_ERROR).
-                    body(new BaseResponse(false,e.getMessage()));
-        }
+        return cartFacade.deleteItem(itemId);
     }
+
     @CrossOrigin
     @PostMapping("/edit")
     public ResponseEntity<BaseResponse> update(@RequestBody ItemEditRequestDTO itemEditRequestDTO){
-        try {
-            return ResponseEntity.ok(cartService.updateItemQuantity(itemEditRequestDTO));
-        }catch (RuntimeException e){
-            return ResponseEntity.
-                    status(HttpStatus.INTERNAL_SERVER_ERROR).
-                    body(new BaseResponse(false, e.getMessage()));
-        }
+        return cartFacade.updateItemQuantity(itemEditRequestDTO);
     }
+
     @CrossOrigin
     @PostMapping("/place_order")
-    public ResponseEntity<BaseResponse> placeorder(@RequestBody PlaceOrderRequestDTO placeOrderRequestDTO){
-        try {
-            return ResponseEntity.ok(cartService.placeorder(placeOrderRequestDTO));
-        }catch (RuntimeException e){
-            return ResponseEntity.
-                    status(HttpStatus.INTERNAL_SERVER_ERROR).
-                    body(new BaseResponse(false, e.getMessage()));
-        }
+    public ResponseEntity<BaseResponse> placeOrder(@RequestBody PlaceOrderRequestDTO placeOrderRequestDTO){
+        return cartFacade.placeOrder(placeOrderRequestDTO);
     }
 }

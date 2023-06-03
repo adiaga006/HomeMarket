@@ -19,6 +19,6 @@ public interface CartService {
     BaseResponse createItem(ItemRequestDTO itemRequestDTO);
     BaseResponse deleteItem(Integer itemId);
     BaseResponse updateItemQuantity(ItemEditRequestDTO itemEditRequestDTO);
-    BaseResponse placeorder(PlaceOrderRequestDTO placeOrderRequestDTO);
+    BaseResponse placeOrder(PlaceOrderRequestDTO placeOrderRequestDTO);
 //    UserDTO getOrder(Integer id);
 }
