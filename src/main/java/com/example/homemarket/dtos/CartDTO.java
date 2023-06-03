@@ -19,31 +19,6 @@ public class CartDTO {
     private Integer userId;
     private List<CartItemDTO> itemList;
 
-    public static class Builder {
-        private Integer cartId;
-        private Integer userId;
-        private List<CartItemDTO> itemList;
-
-        public Builder withCartId(Integer cartId) {
-            this.cartId = cartId;
-            return this;
-        }
-
-        public Builder withUserId(Integer userId) {
-            this.userId = userId;
-            return this;
-        }
-
-        public Builder withItemList(List<CartItemDTO> itemList) {
-            this.itemList = itemList;
-            return this;
-        }
-
-        public CartDTO build() {
-            return new CartDTO(cartId, userId, itemList);
-        }
-    }
-
     public CartDTO(Cart cart) {
         this.cartId = cart.getCartID();
         this.userId = cart.getUser().getUserID();
